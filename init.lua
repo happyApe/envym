@@ -54,3 +54,28 @@ require('lazy').setup({
     },
   },
 })
+
+local function require_all_in_directory(dir)
+  -- Get the full path for the directory relative to your Neovim config directory
+  local config_path = vim.fn.stdpath 'config' .. '/' .. dir
+
+  -- Iterate over all files in the directory
+  for _, file in ipairs(vim.fn.readdir(config_path)) do
+    -- Only require files ending in '.lua'
+    if file:sub(-4) == '.lua' then
+      -- Remove .lua extension
+      local module_name = file:sub(1, -5)
+
+      -- Build the require path relative to the Neovim config
+      local require_path = dir .. '/' .. module_name
+
+      -- Normalize slashes for require
+      require_path = require_path:gsub('/', '.')
+
+      -- Require the module
+      require(require_path)
+    end
+  end
+end
+
+require_all_in_directory 'lua/custom/plugins/config'
