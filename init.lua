@@ -54,7 +54,3 @@ require('lazy').setup({
     },
   },
 })
-
-require 'custom.plugins.config.nvim-tree'
-require 'custom.plugins.config.dap'
-require 'custom.plugins.config.lsp'
