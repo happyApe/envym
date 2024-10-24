@@ -6,6 +6,7 @@ return {
       require('dap-python').setup '/Users/m036591/miniforge3/envs/analytics/bin/python'
     end,
   },
+  { 'jay-babu/mason-nvim-dap.nvim' },
 
   {
     'mfussenegger/nvim-dap',
