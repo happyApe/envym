@@ -615,5 +615,6 @@ return {
   },
 
   require 'custom.indent_line',
+  require 'custom.lint',
   require 'custom.autopairs',
 }
