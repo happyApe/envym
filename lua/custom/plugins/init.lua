@@ -2,9 +2,6 @@
 return {
   {
     'mfussenegger/nvim-dap-python',
-    init = function()
-      require('dap-python').setup '/Users/m036591/miniforge3/envs/analytics/bin/python'
-    end,
   },
   { 'jay-babu/mason-nvim-dap.nvim' },
 
@@ -391,23 +388,6 @@ return {
     },
   },
   { 'Bilal2453/luvit-meta', lazy = true },
-  {
-    -- Main LSP Configuration
-    'neovim/nvim-lspconfig',
-    dependencies = {
-      -- Automatically install LSPs and related tools to stdpath for Neovim
-      { 'williamboman/mason.nvim', config = true }, -- NOTE: Must be loaded before dependants
-      'williamboman/mason-lspconfig.nvim',
-      'WhoIsSethDaniel/mason-tool-installer.nvim',
-
-      -- Useful status updates for LSP.
-      -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim', opts = {} },
-
-      -- Allows extra capabilities provided by nvim-cmp
-      'hrsh7th/cmp-nvim-lsp',
-    },
-  },
 
   { -- Autoformat
     'stevearc/conform.nvim',
@@ -617,5 +597,6 @@ return {
 
   require 'custom.indent_line',
   require 'custom.lint',
+  require 'custom.lsp_config',
   require 'custom.autopairs',
 }

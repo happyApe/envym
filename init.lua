@@ -66,10 +66,10 @@ local function require_all_in_directory(dir)
       -- Remove .lua extension
       local module_name = file:sub(1, -5)
 
-      -- Build the require path relative to the Neovim config
-      local require_path = dir .. '/' .. module_name
+      -- Build the require path relative to the directory, without 'lua/'
+      local require_path = dir:gsub('^lua/', '') .. '/' .. module_name
 
-      -- Normalize slashes for require
+      -- Normalize slashes for require (Lua uses dots instead of slashes)
       require_path = require_path:gsub('/', '.')
 
       -- Require the module
@@ -78,4 +78,6 @@ local function require_all_in_directory(dir)
   end
 end
 
+-- Call the function
 require_all_in_directory 'lua/custom/plugins/config'
+require('dap-python').setup '/Users/m036591/miniforge3/envs/analytics/bin/python'
