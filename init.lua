@@ -78,6 +78,14 @@ local function require_all_in_directory(dir)
   end
 end
 
--- Call the function
+-- which python function to pull the python path to use for dap
+function get_python_path()
+  local python_path = vim.fn.system 'which python'
+  if python_path == '' then
+    python_path = '/usr/bin/python'
+  end
+  return python_path
+end
+local python_path = get_python_path()
 require_all_in_directory 'lua/custom/plugins/config'
-require('dap-python').setup '/Users/m036591/miniforge3/envs/analytics/bin/python'
+require('dap-python').setup(python_path)
