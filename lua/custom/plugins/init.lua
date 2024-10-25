@@ -599,4 +599,5 @@ return {
   require 'custom.lint',
   require 'custom.lsp_config',
   require 'custom.autopairs',
+  require 'custom.gitsigns',
 }
