@@ -11,14 +11,3 @@ lspconfig.pyright.setup {
     },
   },
 }
-
--- config for ruff
-lspconfig.ruff.setup {
-  init_options = {
-    settings = {
-      args = {
-        '--line-length=80',
-      },
-    },
-  },
-}
