@@ -102,6 +102,7 @@ vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = tr
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
 vim.keymap.set('n', 'gA', 'ggVG"+y') -- If this doesn't work change + to * -- Copy all to Clipboard
+vim.keymap.set('n', 'gQ', 'ggVG"_d"+P', { desc = 'Replace entire file with clipboard content' })
 vim.keymap.set('n', 'gY', 'ggVGy') -- If this doesn't work change + to * -- Copy all to Clipboard
 
 vim.keymap.set('n', '<leader>e', ':NvimTreeToggle<CR>', { desc = 'Toggle NvimTree' })
