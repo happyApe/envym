@@ -15,12 +15,9 @@ vim.g.have_nerd_font = true
 -- Make line numbers default and have relative numbering
 vim.opt.number = true
 vim.opt.relativenumber = true
--- You can also add relative line numbers, for help with jumping.
---  Experiment for yourself to see if you like it!
--- vim.o.relativenumber = true
 
 -- Enable mouse mode, can be useful for resizing splits for example!
-vim.o.mouse = 'a'
+vim.opt.mouse = 'a'
 
 -- Don't show the mode, since it's already in status line
 vim.opt.showmode = false
@@ -30,31 +27,31 @@ vim.opt.showmode = false
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
 vim.schedule(function()
-  vim.o.clipboard = 'unnamedplus'
+  vim.opt.clipboard = 'unnamedplus'
 end)
 
 -- Enable break indent
-vim.o.breakindent = true
+vim.opt.breakindent = true
 
 -- Save undo history
-vim.o.undofile = true
+vim.opt.undofile = true
 
 -- Case-insensitive searching UNLESS \C or capital in search
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
 -- Keep signcolumn on by default
-vim.o.signcolumn = 'yes'
+vim.opt.signcolumn = 'yes'
 
 -- Decrease update time
-vim.o.updatetime = 250
+vim.opt.updatetime = 250
 
 -- Decrease mapped sequence wait time
-vim.o.timeoutlen = 300
+vim.opt.timeoutlen = 300
 
 -- Configure how new splits should be opened
-vim.o.splitright = true
-vim.o.splitbelow = true
+vim.opt.splitright = true
+vim.opt.splitbelow = true
 
 -- Sets how neovim will display certain whitespace in the editor.
 --  See `:help 'list'`
@@ -64,22 +61,41 @@ vim.o.splitbelow = true
 --  It is very similar to `vim.o` but offers an interface for conveniently interacting with tables.
 --   See `:help lua-options`
 --   and `:help lua-options-guide`
-vim.o.list = true
+vim.opt.list = true
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
 -- Preview substitutions live, as you type!
-vim.o.inccommand = 'split'
+vim.opt.inccommand = 'split'
 
 -- Show which line your cursor is on
-vim.o.cursorline = true
+vim.opt.cursorline = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
-vim.o.scrolloff = 10
+vim.opt.scrolloff = 10
+
+-- Keep some lines to the left and right when scrolling horizontally
+vim.opt.sidescrolloff = 8
 
 -- if performing an operation that would fail due to unsaved changes in the buffer (like `:q`),
 -- instead raise a dialog asking if you wish to save the current file(s)
 -- See `:help 'confirm'`
-vim.o.confirm = true
+vim.opt.confirm = true
+
+-- Better completion experience
+vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
+
+-- Enable 24-bit RGB colors
+vim.opt.termguicolors = true
+
+-- Improve search experience
+vim.opt.hlsearch = true
+
+-- Better diff options
+vim.opt.diffopt:append('linematch:60')
+
+-- Performance improvements
+vim.opt.lazyredraw = true -- Don't redraw while executing macros
+vim.opt.ttyfast = true -- Indicate fast terminal connection
 
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
@@ -110,8 +126,7 @@ vim.keymap.set('n', '\\', ':NvimTreeFindFile<CR>', { desc = 'NvimTree Find File'
 vim.keymap.set('n', '<leader>td', ':ToggleDiag<CR>') -- Toggle the diagnostics
 vim.keymap.set('n', '<leader>p', ':Glow<CR>') -- Glow to preview the markdown
 
-vim.keymap.set('n', '<leader>gs', ':Gitsigns toggle_linehl<CR>') -- Toggle the git diagnostics
-vim.keymap.set('n', '<leader>i', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+vim.keymap.set('n', '<leader>gt', ':Gitsigns toggle_linehl<CR>') -- Toggle the git line highlights
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -134,11 +149,6 @@ vim.keymap.set('n', '<leader>H', ':HopWord<CR>')
 
 -- Harpoon
 
--- NOTE: Some terminals have colliding keymaps or are not able to send distinct keycodes
--- vim.keymap.set("n", "<C-S-h>", "<C-w>H", { desc = "Move window to the left" })
--- vim.keymap.set("n", "<C-S-l>", "<C-w>L", { desc = "Move window to the right" })
--- vim.keymap.set("n", "<C-S-j>", "<C-w>J", { desc = "Move window to the lower" })
--- vim.keymap.set("n", "<C-S-k>", "<C-w>K", { desc = "Move window to the upper" })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -644,30 +654,44 @@ require('lazy').setup({
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
-        -- clangd = {},
-        -- gopls = {},
-        pyright = {},
-        -- rust_analyzer = {},
-        -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
-        --
-        -- Some languages (like typescript) have entire language plugins that can be useful:
-        --    https://github.com/pmizio/typescript-tools.nvim
-        --
-        -- But for many setups, the LSP (`ts_ls`) will work just fine
-        -- ts_ls = {},
-        --
+        -- Web Development
+        ts_ls = {},
+        html = {},
+        cssls = {},
+        tailwindcss = {},
+        emmet_ls = {},
 
+        -- Systems Programming
+        clangd = {},
+        rust_analyzer = {},
+        -- gopls = {}, -- Commented out - requires Go to be installed
+
+        -- Python
+        pyright = {},
+
+        -- DevOps & Config
+        yamlls = {},
+        jsonls = {},
+        dockerls = {},
+        terraformls = {},
+
+        -- Shell
+        bashls = {},
+
+        -- Lua
         lua_ls = {
-          -- cmd = { ... },
-          -- filetypes = { ... },
-          -- capabilities = {},
           settings = {
             Lua = {
               completion = {
                 callSnippet = 'Replace',
               },
-              -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-              -- diagnostics = { disable = { 'missing-fields' } },
+              diagnostics = {
+                globals = { 'vim' },
+                disable = { 'missing-fields' }
+              },
+              workspace = {
+                checkThirdParty = false,
+              },
             },
           },
         },
@@ -686,7 +710,17 @@ require('lazy').setup({
       -- for you, so that they are available from within Neovim.
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
-        'stylua', -- Used to format lua code
+        -- Formatters
+        'stylua', -- Lua
+        'prettier', -- JS/TS/HTML/CSS/JSON/YAML
+        'black', -- Python
+        'isort', -- Python import sorting
+        'shfmt', -- Shell scripts
+
+        -- Linters
+        'eslint_d', -- JS/TS
+        'ruff', -- Python
+        'shellcheck', -- Shell scripts
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -740,16 +774,26 @@ require('lazy').setup({
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
-        -- Conform can also run multiple formatters sequentially
         python = { 'isort', 'black' },
-        --
-        -- You can use 'stop_after_first' to run the first available formatter from the list
-        -- javascript = { "prettierd", "prettier", stop_after_first = true },
+        javascript = { 'prettier' },
+        typescript = { 'prettier' },
+        javascriptreact = { 'prettier' },
+        typescriptreact = { 'prettier' },
+        html = { 'prettier' },
+        css = { 'prettier' },
+        scss = { 'prettier' },
+        json = { 'prettier' },
+        yaml = { 'prettier' },
+        markdown = { 'prettier' },
+        go = { 'gofmt' },
+        sh = { 'shfmt' },
+        bash = { 'shfmt' },
+        zsh = { 'shfmt' },
       },
     },
     init = function()
       -- If you want the formatexpr, here is the place to set it
-      vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
+      vim.opt.formatexpr = "v:lua.require'conform'.formatexpr()"
     end,
   },
 
