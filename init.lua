@@ -1,3 +1,4 @@
+-- ENVYM
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
@@ -91,7 +92,7 @@ vim.opt.termguicolors = true
 vim.opt.hlsearch = true
 
 -- Better diff options
-vim.opt.diffopt:append('linematch:60')
+vim.opt.diffopt:append 'linematch:60'
 
 -- Performance improvements
 vim.opt.lazyredraw = true -- Don't redraw while executing macros
@@ -148,7 +149,6 @@ vim.keymap.set('n', '<leader>u', vim.cmd.UndotreeToggle)
 vim.keymap.set('n', '<leader>H', ':HopWord<CR>')
 
 -- Harpoon
-
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -687,7 +687,7 @@ require('lazy').setup({
               },
               diagnostics = {
                 globals = { 'vim' },
-                disable = { 'missing-fields' }
+                disable = { 'missing-fields' },
               },
               workspace = {
                 checkThirdParty = false,
