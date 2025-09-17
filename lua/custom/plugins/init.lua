@@ -1,6 +1,20 @@
 -- You can add your own plugins here or in other files in this directory!
 return {
   {
+    'benomahony/uv.nvim',
+    -- Optional filetype to lazy load when you open a python file
+    -- ft = { python }
+    -- Optional dependency, but recommended:
+    -- dependencies = {
+    --   "folke/snacks.nvim"
+    -- or
+    --   "nvim-telescope/telescope.nvim"
+    -- },
+    opts = {
+      picker_integration = true,
+    },
+  },
+  {
     'kevinhwang91/nvim-ufo',
     dependencies = { 'kevinhwang91/promise-async' },
     config = function()
@@ -14,11 +28,11 @@ return {
       vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
       vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
 
-      require('ufo').setup({
+      require('ufo').setup {
         provider_selector = function(bufnr, filetype, buftype)
           return { 'lsp', 'indent' }
-        end
-      })
+        end,
+      }
     end,
   },
   {
