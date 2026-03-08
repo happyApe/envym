@@ -156,6 +156,62 @@ return {
       transparent_mode = false,
     },
   },
+  {
+    'coder/claudecode.nvim',
+    dependencies = { 'folke/snacks.nvim' },
+    opts = {
+      terminal_cmd = '/Users/quack/.local/bin/claude',
+      auto_start = true,
+      log_level = 'info',
+      focus_after_send = false,
+      track_selection = true,
+      terminal = {
+        provider = 'snacks',
+        auto_close = true,
+        snacks_win_opts = {
+          position = 'float',
+          width = 0.9,
+          height = 0.9,
+          border = 'rounded',
+          backdrop = 80,
+          keys = {
+            claude_hide = {
+              '<C-,>',
+              function(self)
+                self:hide()
+              end,
+              mode = 't',
+              desc = 'Hide Claude',
+            },
+          },
+        },
+      },
+      diff_opts = {
+        layout = 'vertical',
+        open_in_new_tab = false,
+        keep_terminal_focus = false,
+      },
+    },
+    config = true,
+    keys = {
+      { '<C-,>', '<cmd>ClaudeCodeFocus<cr>', desc = 'Toggle Claude float', mode = { 'n', 'x' } },
+      { '<leader>cc', '<cmd>ClaudeCode<cr>', desc = 'Toggle Claude' },
+      { '<leader>cf', '<cmd>ClaudeCodeFocus<cr>', desc = 'Focus Claude' },
+      { '<leader>cr', '<cmd>ClaudeCode --resume<cr>', desc = 'Resume Claude' },
+      { '<leader>cC', '<cmd>ClaudeCode --continue<cr>', desc = 'Continue Claude' },
+      { '<leader>cm', '<cmd>ClaudeCodeSelectModel<cr>', desc = 'Select Claude model' },
+      { '<leader>cb', '<cmd>ClaudeCodeAdd %<cr>', desc = 'Add current buffer' },
+      { '<leader>cs', '<cmd>ClaudeCodeSend<cr>', mode = 'v', desc = 'Send to Claude' },
+      {
+        '<leader>cs',
+        '<cmd>ClaudeCodeTreeAdd<cr>',
+        desc = 'Add file',
+        ft = { 'NvimTree', 'neo-tree', 'oil', 'minifiles', 'netrw' },
+      },
+      { '<leader>ca', '<cmd>ClaudeCodeDiffAccept<cr>', desc = 'Accept diff' },
+      { '<leader>cd', '<cmd>ClaudeCodeDiffDeny<cr>', desc = 'Deny diff' },
+    },
+  },
   { -- Custom Theme inspired from original VIM
     'EdenEast/nightfox.nvim', -- colorscheme
     opts = {
