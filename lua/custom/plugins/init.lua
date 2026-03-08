@@ -73,7 +73,7 @@ return {
   {
     'WhoIsSethDaniel/toggle-lsp-diagnostics.nvim',
     config = function()
-      require('toggle_lsp_diagnostics').init({ start_on = true }, { underline = true, virtual_text = { prefix = 'XXX', spacing = 5 } }) -- Toggle LSP linter
+      require('toggle_lsp_diagnostics').init({ start_on = false }, { underline = true, virtual_text = { prefix = 'XXX', spacing = 5 } }) -- Toggle LSP linter
     end,
   },
 
