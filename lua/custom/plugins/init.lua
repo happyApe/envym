@@ -104,18 +104,35 @@ return {
     lazy = false,
   },
   {
-    'akinsho/toggleterm.nvim',
-    lazy = false,
-    cmd = { 'ToggleTerm' },
+    'nvzone/floaterm',
+    dependencies = 'nvzone/volt',
+    cmd = 'FloatermToggle',
     opts = {
-      open_mapping = [[<c-\>]],
-      direction = 'float',
-      shade_terminals = true,
-      start_in_insert = true,
-      insert_mappings = true, -- whether or not the open mapping applies in insert mode
-      terminal_mappings = true, -- whether or not the open mapping applies in the opened terminals
-      persist_size = true,
-      close_on_exit = true, -- close the terminal window when the process exits
+      size = { h = 60, w = 70 },
+      mappings = {
+        term = function(buf)
+          local api = require 'floaterm.api'
+
+          vim.keymap.set({ 'n', 't' }, '<leader>h', function()
+            api.switch_wins()
+          end, { buffer = buf, desc = 'Floaterm: switch to sidebar' })
+
+          vim.keymap.set({ 'n', 't' }, '<leader>j', function()
+            api.cycle_term_bufs 'prev'
+          end, { buffer = buf, desc = 'Floaterm: prev terminal' })
+
+          vim.keymap.set({ 'n', 't' }, '<leader>k', function()
+            api.cycle_term_bufs 'next'
+          end, { buffer = buf, desc = 'Floaterm: next terminal' })
+
+          -- transparency
+          local win = vim.api.nvim_get_current_win()
+          vim.api.nvim_win_set_option(win, 'winblend', 10)
+        end,
+      },
+    },
+    keys = {
+      { [[<c-\>]], '<cmd>FloatermToggle<cr>', desc = 'Toggle floating terminal', mode = { 'n', 't' } },
     },
   },
   {
